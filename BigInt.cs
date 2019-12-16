@@ -229,6 +229,53 @@ namespace RSAProject
             long res = long.Parse(First) * long.Parse(Second); //O(1)
             return res.ToString(); //O(1)
         }
+        
+        public static string longDivision(string number, string divisor)
+        {
+            
+            string result = "";
+
+            // Find prefix of number that is larger 
+            // than divisor. 
+            int idx = 0;
+            int temp = (int)(number[idx] - '0');
+            int d = Int32.Parse(divisor);
+            int n = Int32.Parse(number);
+            if (n<d)
+            {
+                return "0";
+                
+            }
+            
+            while (temp < d)
+            {
+                temp = temp * 10 + (int)(number[idx + 1] - '0');
+                idx++;
+            }
+            ++idx;
+
+            // Repeatedly divide divisor with temp. After 
+            // every division, update temp to include one 
+            // more digit. 
+            while (number.Length > idx)
+            {
+                // Store result in result i.e. temp / divisor 
+                result += (char)(temp / d + '0');
+
+                // Take next digit of number 
+                temp = (temp % d) * 10 + (int)(number[idx] - '0');
+                idx++;
+            }
+            result += (char)(temp / d + '0');
+
+            // If divisor is greater than number 
+            if (result.Length == 0)
+            {
+                return "0";
+            }
+            // else return ans 
+            return result;
+        }
     }
 }
 
